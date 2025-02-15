@@ -5,11 +5,23 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sora: ['Sora', 'sans-serif'],
+      },
+      fontOpticalSizing: {
+        12: '12px',
+      },
+      fontWeight: {
+        normal: 400,
+      },
+      fontStyle: {
+        normal: 'normal',
+      },
+    },
   },
   plugins: [
     // eslint-disable-next-line no-undef
     require('daisyui'),
   ],
 }
-

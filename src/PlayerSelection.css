@@ -1,0 +1,50 @@
+.selected {
+    background-color: #f0f8ff; /* Light blue background for selected cards */
+    border: 2px solid #007bff; /* Blue border to highlight selected */
+    opacity: 0.9; /* Slight opacity */
+    transform: scale(1.05); /* Slightly larger */
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+  
+  .selected .card-title, .cp{
+    color: #007bff;
+  }
+  .custom-alert {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #93b3e7, #e2cda8); /* Gradient background */
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 1000;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Complete box-shadow value */
+}
+
+.countdown-bar {
+    height: 4px;
+    background-color: #2f19bd;
+    animation: countdown 3s linear;
+    margin-top: 8px;
+    border-radius: 2px;
+}
+
+@keyframes countdown {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}
