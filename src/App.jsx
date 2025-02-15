@@ -4,18 +4,19 @@ import Banner from './components/Banner';
 import PlayerSelection from './components/PlayerSelection';
 
 const App = () => {
-  const [coins, setCoins] = useState(0); // Initialize coin count at 0
+  const [coins, setCoins] = useState(0);
 
-  // Function to add coins
-  const addCoins = () => {
-    setCoins((prevCoins) => prevCoins + 6000000); // Add 6 million coins
-  };
+  
+  const addCoins = (amount) => setCoins((prevCoins) => prevCoins + amount);
+
+  
+  const deductCoins = (amount) => setCoins((prevCoins) => prevCoins - amount);
 
   return (
     <div className="w-[90%] mx-auto">
-      <Header coins={coins} /> {/* Pass coins to Header for display */}
-      <Banner onClaim={addCoins} /> {/* Pass addCoins to Banner for button click */}
-      <PlayerSelection />
+      <Header coins={coins} />
+      <Banner onClaim={() => addCoins(6000000)} />
+      <PlayerSelection coins={coins} deductCoins={deductCoins} />
     </div>
   );
 };

@@ -1,36 +1,40 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-function PlayerSelection() {
+
+function PlayerSelection({ coins, deductCoins }) {
   const [availableActive, setAvailableActive] = useState(true);
   const [players, setPlayers] = useState([]);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const maxSelectedPlayers = 6;
 
-  
   useEffect(() => {
-    
     fetch('../../public/players.json')
       .then((response) => response.json())
       .then((data) => setPlayers(data))
       .catch((error) => console.error("Error fetching players data:", error));
-
   }, []);
 
+
+
   const togglePlayerSelection = (player) => {
+    const biddingPrice = parseInt(player.biddingPrice.replace(/,/g, ''), 10);
+    
     if (selectedPlayers.includes(player)) {
-
       alert(`${player.name} is already selected!`);
-      
     } else if (selectedPlayers.length < maxSelectedPlayers) {
-
-      setSelectedPlayers([...selectedPlayers, player]);
+      if (coins >= biddingPrice) {
+        setSelectedPlayers([...selectedPlayers, player]);
+        deductCoins(biddingPrice);
+      } else {
+        alert(`Insufficient coins to select ${player.name}!`);
+      }
     } else {
-
       alert('Player limit reached. Please remove one from the selected list.');
     }
   };
-
   
+
   const displayedPlayers = availableActive ? players : selectedPlayers;
 
   return (
@@ -41,7 +45,8 @@ function PlayerSelection() {
           : `Selected Players (${selectedPlayers.length}/${maxSelectedPlayers})`}
       </h2>
       <div style={{ marginTop: '20px' }}>
-        <button className='btn'
+        <button
+          className='btn'
           onClick={() => setAvailableActive(true)}
           style={{
             backgroundColor: availableActive ? '#007bff' : '#ccc',
@@ -49,7 +54,8 @@ function PlayerSelection() {
         >
           Available
         </button>
-        <button className='btn'
+        <button
+          className='btn'
           onClick={() => setAvailableActive(false)}
           style={{
             backgroundColor: !availableActive ? '#007bff' : '#ccc',
@@ -71,8 +77,6 @@ function PlayerSelection() {
             </figure>
             <div className="card-body">
               <h2 className="card-title">{player.name}</h2>
-              
-              
               {availableActive ? (
                 <>
                   <p><strong>Country:</strong> {player.country}</p>
@@ -110,5 +114,11 @@ function PlayerSelection() {
     </div>
   );
 }
+
+PlayerSelection.propTypes = {
+  coins: PropTypes.number.isRequired,
+  deductCoins: PropTypes.func.isRequired,
+};
+
 
 export default PlayerSelection;
